@@ -1,0 +1,83 @@
+print("loading rnxxu gui")
+
+local Players = game:GetService("Players")
+local TweenService = game:GetService("TweenService")
+ 
+local player = Players.LocalPlayer
+local gui = Instance.new("ScreenGui")
+gui.Name = "MadeByGui"
+gui.ResetOnSpawn = false
+gui.Parent = player:WaitForChild("PlayerGui")
+ 
+-- Создаем фоновый прямоугольник на весь экран
+local background = Instance.new("Frame")
+background.Size = UDim2.new(1, 0, 1, 0)
+background.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+background.BackgroundTransparency = 1 -- Начинаем полностью прозрачным
+background.BorderSizePixel = 0
+background.Parent = gui
+ 
+-- Создаем текст по центру экрана
+local textLabel = Instance.new("TextLabel")
+textLabel.Size = UDim2.new(1, 0, 0.2, 0)
+textLabel.Position = UDim2.new(0, 0, 0.4, 0)
+textLabel.BackgroundTransparency = 1
+textLabel.Text = "made by rnxxu"
+textLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+textLabel.TextSize = 30
+textLabel.Font = Enum.Font.GothamBold
+textLabel.TextStrokeTransparency = 1 -- Начинаем полностью прозрачным
+textLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+textLabel.TextScaled = true
+textLabel.TextTransparency = 1 -- Начинаем полностью прозрачным
+textLabel.BorderSizePixel = 0
+textLabel.Parent = gui
+ 
+-- Настройки анимации
+local tweenInfo = TweenInfo.new(
+    1.5, -- Длительность 1.5 секунды
+    Enum.EasingStyle.Quad,
+    Enum.EasingDirection.Out
+)
+ 
+-- Анимация появления
+local appearGoalsText = {
+    TextTransparency = 0,
+    TextStrokeTransparency = 0.5
+}
+ 
+local appearGoalsBackground = {
+    BackgroundTransparency = 0.3
+}
+ 
+-- Запускаем анимацию появления
+local appearTextTween = TweenService:Create(textLabel, tweenInfo, appearGoalsText)
+local appearBackgroundTween = TweenService:Create(background, tweenInfo, appearGoalsBackground)
+ 
+appearTextTween:Play()
+appearBackgroundTween:Play()
+ 
+-- Ждем завершения появления + 5 секунд показа
+wait(1.5 + 1)
+ 
+-- Анимация исчезновения
+local disappearGoalsText = {
+    TextTransparency = 1,
+    TextStrokeTransparency = 1
+}
+ 
+local disappearGoalsBackground = {
+    BackgroundTransparency = 1
+}
+ 
+-- Создаем и запускаем твины исчезновения
+local disappearTextTween = TweenService:Create(textLabel, tweenInfo, disappearGoalsText)
+local disappearBackgroundTween = TweenService:Create(background, tweenInfo, disappearGoalsBackground)
+ 
+disappearTextTween:Play()
+disappearBackgroundTween:Play()
+ 
+-- Удаляем GUI после завершения анимации исчезновения
+disappearBackgroundTween.Completed:Connect(function()
+    gui:Destroy()
+end)
